@@ -32,6 +32,8 @@ public class Utility {
             //取出最近几日的天气预测的第一天
             JSONArray dailyForecast = weather.getJSONArray("daily_forecast");
             JSONObject today = dailyForecast.getJSONObject(0);
+            //设置今日日期
+            info.setData(today.getString("date"));
             JSONObject tmp = today.getJSONObject("tmp");
             info.setMinTemp(tmp.getString("min"));
             info.setMaxTemp(tmp.getString("max"));

@@ -17,6 +17,16 @@ public class WeatherInfo {
     //数据更新时间
     private String loc;
 
+    private String data;
+
+    public String getData() {
+        return data;
+    }
+
+    public void setData(String data) {
+        this.data = data;
+    }
+
     public String getCityName() {
         return cityName;
     }
