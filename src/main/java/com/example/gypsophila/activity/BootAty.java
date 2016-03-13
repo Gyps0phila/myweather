@@ -5,14 +5,17 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.gypsophila.db.WeatherDB;
 import com.example.gypsophila.model.City;
+import com.example.gypsophila.model.WeatherInfo;
 import com.example.gypsophila.myweather.R;
 import com.example.gypsophila.util.HttpCallBackListener;
 import com.example.gypsophila.util.HttpUtil;
+import com.example.gypsophila.util.Utility;
 
 /**
  * Created by Gypsophila on 2016/3/13.
@@ -20,20 +23,21 @@ import com.example.gypsophila.util.HttpUtil;
 public class BootAty extends Activity {
 
 
-    private Button search_city;
-    private final String URLPREFIX = "https://api.heweather.com/x3/weather?city=";
-    private final String URLEND = "&key=9939d20a58bf4b08bca00f9c56ff7217";
+    private Button searchCity;
+    private EditText cityName;
     private WeatherDB weatherDB;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.boot);
-        search_city = (Button) findViewById(R.id.search_city);
+        searchCity = (Button) findViewById(R.id.search_city);
+        cityName = (EditText) findViewById(R.id.city_name);
         weatherDB = WeatherDB.getInstance(this);
-        search_city.setOnClickListener(new View.OnClickListener() {
+
+        searchCity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                
+
             }
         });
     }
@@ -57,7 +61,7 @@ public class BootAty extends Activity {
             }
         }
         //拼接请求链接
-        urlString = URLPREFIX + cityName + URLEND;
+        urlString = Utility.URLPREFIX + cityName + Utility.URLEND;
         //添加关注的城市加入数据库
         weatherDB.saveCity(new City(cityName));
 
@@ -65,7 +69,8 @@ public class BootAty extends Activity {
             @Override
             public void onFinish(String response) {
                 //请求返回时候的回调处理
-                Log.i("response", response);
+                WeatherInfo weatherInfo = Utility.parseWeatherJson(response);
+                Log.i("weatherInfo", weatherInfo.toString());
             }
 
             @Override
