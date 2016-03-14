@@ -37,6 +37,15 @@ public class BootAty extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //如果有储存的城市，则直接跳转
+        weatherDB = WeatherDB.getInstance(BootAty.this);
+        List<City> cities = weatherDB.loadCities();
+        if (cities.size() != 0) {
+            //跳转到主页面
+            startActivity(new Intent(this, MainAty.class));
+            finish();
+            return;
+        }
         setContentView(R.layout.boot);
         searchCity = (Button) findViewById(R.id.search_city);
         btn_back = (Button) findViewById(R.id.btn_back);
@@ -80,20 +89,30 @@ public class BootAty extends Activity {
         //拼接请求链接
         urlString = Utility.URLPREFIX + cityName + Utility.URLEND;
         //添加关注的城市加入数据库
-        weatherDB.saveCity(new City(cityName));
+        if (weatherDB.contains(cityName) != null) {
+            Toast.makeText(this, "已添加该城市", Toast.LENGTH_SHORT).show();
+            return;
+        } else {
+            final long cityId = weatherDB.saveCity(new City(cityName));
+            HttpUtil.sendHttpRequest(urlString, new HttpCallBackListener() {
+                @Override
+                public void onFinish(String response) {
+                    //请求返回时候的回调处理
+                    //将刚刚添加的城市相关的天气数据保存在数据库
+                    WeatherInfo weatherInfo = Utility.parseWeatherJson(response);
+                    weatherDB.addWeatherInfo(weatherInfo, cityId);
 
-        HttpUtil.sendHttpRequest(urlString, new HttpCallBackListener() {
-            @Override
-            public void onFinish(String response) {
-                //请求返回时候的回调处理
-                WeatherInfo weatherInfo = Utility.parseWeatherJson(response);
-                Log.i("weatherInfo", weatherInfo.toString());
-            }
+//                    Bundle bundle = new Bundle();
 
-            @Override
-            public void onError(Exception e) {
+                    Log.i("weatherInfo", weatherInfo.toString());
+                }
 
-            }
-        });
+                @Override
+                public void onError(Exception e) {
+
+                }
+            });
+        }
+
     }
 }

@@ -4,11 +4,13 @@
     android:layout_height="match_parent">
 
     <LinearLayout
+        android:background="#4b4d64"
         android:layout_margin="5dp"
         android:padding="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <Button
+            android:background="#4b4d64"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -21,6 +23,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/city_name"/>
         <Button
+            android:background="#4b4d64"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

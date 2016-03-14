@@ -17,15 +17,9 @@ public class WeatherInfo {
     //数据更新时间
     private String loc;
 
-    private String data;
+    private String date;
 
-    public String getData() {
-        return data;
-    }
 
-    public void setData(String data) {
-        this.data = data;
-    }
 
     public String getCityName() {
         return cityName;
@@ -71,8 +65,16 @@ public class WeatherInfo {
         return loc;
     }
 
-    public void setLoc(String utc) {
-        this.loc = utc;
+    public void setLoc(String loc) {
+        this.loc = loc;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
     @Override
@@ -84,6 +86,7 @@ public class WeatherInfo {
                 ", maxTemp='" + maxTemp + '\'' +
                 ", weather='" + weather + '\'' +
                 ", loc='" + loc + '\'' +
+                ", date='" + date + '\'' +
                 '}';
     }
 }

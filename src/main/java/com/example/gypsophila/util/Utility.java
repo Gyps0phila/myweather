@@ -33,7 +33,7 @@ public class Utility {
             JSONArray dailyForecast = weather.getJSONArray("daily_forecast");
             JSONObject today = dailyForecast.getJSONObject(0);
             //设置今日日期
-            info.setData(today.getString("date"));
+            info.setDate(today.getString("date"));
             JSONObject tmp = today.getJSONObject("tmp");
             info.setMinTemp(tmp.getString("min"));
             info.setMaxTemp(tmp.getString("max"));

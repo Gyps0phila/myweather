@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.gypsophila.model.City;
+import com.example.gypsophila.model.WeatherInfo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,17 +35,19 @@ public class WeatherDB {
         return weatherDB;
     }
 
-    public void saveCity(City city) {
+    public long saveCity(City city) {
         if (city != null) {
             ContentValues values = new ContentValues();
             values.put("city_name", city.getCityName());
-            db.insert("city", null, values);
+            long city_id = db.insert("city", null, values);
+            return city_id;
         }
+        return -1;
     }
 
     public List<City> loadCities() {
         List<City> cities = new ArrayList<City>();
-        Cursor cursor = db.query("city", null, null, null, null, null, null);
+        Cursor cursor = db.query("city", null, null, null, null, null, "_id desc");
         if (cursor.moveToFirst()) {
 
             do {
@@ -74,6 +77,41 @@ public class WeatherDB {
             }
         }
         return null;
+    }
+
+    //将最近的天气是存入
+
+    public void addWeatherInfo(WeatherInfo info,long cityId) {
+        if (info != null) {
+            ContentValues values = new ContentValues();
+            values.put("city_name", info.getCityName());
+            values.put("min_temp", info.getMinTemp());
+            values.put("max_temp", info.getMaxTemp());
+            values.put("current_temp", info.getCurrentTemp());
+            values.put("weather", info.getWeather());
+            values.put("loc", info.getLoc());
+            values.put("date", info.getDate());
+            values.put("city_id", cityId);
+            db.insert("weather_info", null, values);
+        }
+    }
+
+    public List<WeatherInfo> loadWeatherInfos() {
+        List<WeatherInfo> weatherInfos = new ArrayList<WeatherInfo>();
+        Cursor cs = db.query("weather_info", null, null, null, null, null, null);
+        if (cs.moveToFirst()) {
+            do {
+                WeatherInfo weatherInfo = new WeatherInfo();
+                weatherInfo.setCityName(cs.getString(cs.getColumnIndex("city_name")));
+                weatherInfo.setCurrentTemp(cs.getString(cs.getColumnIndex("current_temp")));
+                weatherInfo.setMinTemp(cs.getString(cs.getColumnIndex("min_temp")));
+                weatherInfo.setMaxTemp(cs.getString(cs.getColumnIndex("max_temp")));
+                weatherInfo.setLoc(cs.getString(cs.getColumnIndex("loc")));
+                weatherInfo.setDate(cs.getString(cs.getColumnIndex("date")));
+                weatherInfos.add(weatherInfo);
+            } while (cs.moveToNext());
+        }
+        return weatherInfos;
     }
 
 
