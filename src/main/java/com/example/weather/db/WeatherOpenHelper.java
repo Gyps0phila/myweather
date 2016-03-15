@@ -1,4 +1,4 @@
-package com.example.gypsophila.db;
+package com.example.weather.db;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

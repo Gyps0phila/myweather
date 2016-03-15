@@ -1,6 +1,5 @@
-package com.example.gypsophila.activity;
+package com.example.weather.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,13 +10,13 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.gypsophila.db.WeatherDB;
-import com.example.gypsophila.model.City;
-import com.example.gypsophila.model.WeatherInfo;
-import com.example.gypsophila.myweather.R;
-import com.example.gypsophila.util.HttpCallBackListener;
-import com.example.gypsophila.util.HttpUtil;
-import com.example.gypsophila.util.Utility;
+import com.example.weather.db.WeatherDB;
+import com.example.weather.model.City;
+import com.example.weather.model.WeatherInfo;
+import com.example.weather.myweather.R;
+import com.example.weather.util.HttpCallBackListener;
+import com.example.weather.util.HttpUtil;
+import com.example.weather.util.Utility;
 
 
 /**
@@ -84,7 +83,7 @@ public class WeatherInfoFragment extends Fragment implements View.OnClickListene
                     @Override
                     public void onFinish(String response) {
                         WeatherInfo info = Utility.parseWeatherJson(response);
-                        WeatherDB weatherDB = WeatherDB.getInstance(getActivity());
+                        WeatherDB weatherDB = WeatherDB.getInstance(getActivity(),1);
                         City city = new City(info.getCityName());
                         weatherDB.removeCity(city);
                         long cityId = weatherDB.saveCity(city);

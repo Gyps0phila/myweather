@@ -1,11 +1,11 @@
-package com.example.gypsophila.adapter;
+package com.example.weather.adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.view.ViewGroup;
 
-import com.example.gypsophila.activity.WeatherInfoFragment;
+import com.example.weather.activity.WeatherInfoFragment;
 
 import java.util.List;
 

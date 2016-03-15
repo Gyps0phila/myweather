@@ -1,4 +1,4 @@
-package com.example.gypsophila.activity;
+package com.example.weather.activity;
 
 import android.app.Activity;
 import android.os.Bundle;

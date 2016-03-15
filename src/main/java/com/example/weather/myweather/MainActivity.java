@@ -1,14 +1,12 @@
-package com.example.gypsophila.myweather;
+package com.example.weather.myweather;
 
 import android.app.Activity;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.example.gypsophila.db.WeatherDB;
-import com.example.gypsophila.model.City;
+import com.example.weather.db.WeatherDB;
 
 
 public class MainActivity extends Activity {
@@ -18,7 +16,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 //        City city = new City("福清");
-        WeatherDB weatherDB = WeatherDB.getInstance(this);
+        WeatherDB weatherDB = WeatherDB.getInstance(this,1);
 //        weatherDB.saveCity(city);
         Log.i("city===", weatherDB.loadCities().get(0).getCityName());
 

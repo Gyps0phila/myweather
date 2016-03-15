@@ -1,4 +1,4 @@
-package com.example.gypsophila.activity;
+package com.example.weather.activity;
 
 import android.app.Activity;
 import android.content.Context;
@@ -8,16 +8,15 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.gypsophila.db.WeatherDB;
-import com.example.gypsophila.model.City;
-import com.example.gypsophila.model.WeatherInfo;
-import com.example.gypsophila.myweather.R;
-import com.example.gypsophila.util.HttpCallBackListener;
-import com.example.gypsophila.util.HttpUtil;
-import com.example.gypsophila.util.Utility;
+import com.example.weather.db.WeatherDB;
+import com.example.weather.model.City;
+import com.example.weather.model.WeatherInfo;
+import com.example.weather.myweather.R;
+import com.example.weather.util.HttpCallBackListener;
+import com.example.weather.util.HttpUtil;
+import com.example.weather.util.Utility;
 
 import java.util.List;
 
@@ -45,7 +44,7 @@ public class BootAty extends Activity {
         //如果有储存的城市，则直接跳转
         //同时考虑已有城市，但要执行添加而跳转到这个页面
         flag = getIntent().getBooleanExtra("flag", true);
-        weatherDB = WeatherDB.getInstance(BootAty.this);
+        weatherDB = WeatherDB.getInstance(BootAty.this,1);
 
         List<City> cities = weatherDB.loadCities();
         Log.i("cities", "" + cities.size());
@@ -60,7 +59,7 @@ public class BootAty extends Activity {
         searchCity = (Button) findViewById(R.id.search_city);
         btn_back = (Button) findViewById(R.id.btn_back);
         cityName = (EditText) findViewById(R.id.city_name);
-        weatherDB = WeatherDB.getInstance(this);
+        weatherDB = WeatherDB.getInstance(this,1);
 
         searchCity.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,7 +74,7 @@ public class BootAty extends Activity {
             @Override
             public void onClick(View v) {
                 //如果数据库储存的城市数据为空，则返回就直接退出桌面，而不是进入主页面
-                WeatherDB weatherDB = WeatherDB.getInstance(BootAty.this);
+                WeatherDB weatherDB = WeatherDB.getInstance(BootAty.this,1);
                 List<City> cities = weatherDB.loadCities();
                 if (cities.size() == 0) {
                     ActivityCollector.finishAll();

@@ -1,14 +1,13 @@
-package com.example.gypsophila.myweather;
+package com.example.weather.myweather;
 
 import android.test.AndroidTestCase;
-import android.util.Log;
 
-import com.example.gypsophila.db.WeatherDB;
-import com.example.gypsophila.model.City;
-import com.example.gypsophila.model.WeatherInfo;
-import com.example.gypsophila.util.HttpCallBackListener;
-import com.example.gypsophila.util.HttpUtil;
-import com.example.gypsophila.util.Utility;
+import com.example.weather.db.WeatherDB;
+import com.example.weather.model.City;
+import com.example.weather.model.WeatherInfo;
+import com.example.weather.util.HttpCallBackListener;
+import com.example.weather.util.HttpUtil;
+import com.example.weather.util.Utility;
 
 /**
  * Created by Gypsophila on 2016/3/13.

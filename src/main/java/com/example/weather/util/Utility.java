@@ -1,6 +1,6 @@
-package com.example.gypsophila.util;
+package com.example.weather.util;
 
-import com.example.gypsophila.model.WeatherInfo;
+import com.example.weather.model.WeatherInfo;
 
 import org.json.JSONArray;
 import org.json.JSONException;

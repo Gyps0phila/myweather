@@ -1,12 +1,12 @@
-package com.example.gypsophila.db;
+package com.example.weather.db;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.example.gypsophila.model.City;
-import com.example.gypsophila.model.WeatherInfo;
+import com.example.weather.model.City;
+import com.example.weather.model.WeatherInfo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,9 +28,14 @@ public class WeatherDB {
         db = dbHelper.getWritableDatabase();
     }
 
-    public synchronized static WeatherDB getInstance(Context context) {
+    private WeatherDB(Context context, int version) {
+        WeatherOpenHelper dbHelper = new WeatherOpenHelper(context, DB_NAME, null, version);
+        db = dbHelper.getWritableDatabase();
+    }
+
+    public synchronized static WeatherDB getInstance(Context context,int version) {
         if (weatherDB == null) {
-            weatherDB = new WeatherDB(context);
+            weatherDB = new WeatherDB(context,version);
         }
         return weatherDB;
     }

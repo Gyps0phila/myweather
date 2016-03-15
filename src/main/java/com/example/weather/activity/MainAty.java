@@ -1,18 +1,16 @@
-package com.example.gypsophila.activity;
+package com.example.weather.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.gypsophila.adapter.WeatherFragmentPagerAdapter;
-import com.example.gypsophila.db.WeatherDB;
-import com.example.gypsophila.model.WeatherInfo;
-import com.example.gypsophila.myweather.R;
+import com.example.weather.adapter.WeatherFragmentPagerAdapter;
+import com.example.weather.db.WeatherDB;
+import com.example.weather.model.WeatherInfo;
+import com.example.weather.myweather.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +43,7 @@ public class MainAty extends FragmentActivity {
         setContentView(R.layout.weather_layout);
         pager = (ViewPager) findViewById(R.id.pager);
         fragList = new ArrayList<WeatherInfoFragment>();
-        weatherDB = WeatherDB.getInstance(this);
+        weatherDB = WeatherDB.getInstance(this,1);
         weatherInfos = weatherDB.loadWeatherInfos();
         for (int i = 0; i < weatherInfos.size(); i++) {
             WeatherInfoFragment fragment = new WeatherInfoFragment();

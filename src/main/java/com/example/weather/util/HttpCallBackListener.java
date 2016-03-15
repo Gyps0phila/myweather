@@ -1,4 +1,4 @@
-package com.example.gypsophila.util;
+package com.example.weather.util;
 
 /**
  * Created by Gypsophila on 2016/3/13.
