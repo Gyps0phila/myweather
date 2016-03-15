@@ -1,8 +1,12 @@
 package com.example.gypsophila.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.gypsophila.adapter.WeatherFragmentPagerAdapter;
@@ -19,6 +23,7 @@ import java.util.List;
 public class MainAty extends FragmentActivity {
 
 
+
     private TextView cityName;
     private TextView infoLoc;
     private TextView currentTemp;
@@ -30,6 +35,9 @@ public class MainAty extends FragmentActivity {
     private List<WeatherInfoFragment> fragList;
     private WeatherDB weatherDB;
     private List<WeatherInfo> weatherInfos;
+    private Button home;
+    private Button refresh;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,10 +61,21 @@ public class MainAty extends FragmentActivity {
             bundle.putString("loc", weatherInfo.getLoc());
             fragment.setArguments(bundle);
 
+            Log.i("city_name", weatherInfo.getCityName());
+
+
             fragList.add(fragment);
         }
         WeatherFragmentPagerAdapter adapter = new WeatherFragmentPagerAdapter(getSupportFragmentManager(), fragList);
         pager.setAdapter(adapter);
 
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        ActivityCollector.finishAll();
+        finish();
+    }
+
 }

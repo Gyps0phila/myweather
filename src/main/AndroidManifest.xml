@@ -21,7 +21,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.example.gypsophila.activity.MainAty" />
+        <activity android:name="com.example.gypsophila.activity.MainAty" android:launchMode="singleTask"/>
     </application>
 
 </manifest>

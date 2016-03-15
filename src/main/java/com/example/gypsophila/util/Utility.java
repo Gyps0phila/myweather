@@ -11,9 +11,7 @@ import org.json.JSONObject;
  */
 public class Utility {
 
-    public static final String URLPREFIX = "https://api.heweather.com/x3/weather?city=";
 
-    public static final String URLEND = "&key=9939d20a58bf4b08bca00f9c56ff7217";
 
     public static WeatherInfo parseWeatherJson(String jsonString) {
         WeatherInfo info = new WeatherInfo();
