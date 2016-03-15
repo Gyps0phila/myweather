@@ -39,13 +39,13 @@ public class WeatherProvider extends ContentProvider {
         Cursor cursor = null;
         switch (uriMatcher.match(uri)) {
             case WEATHER_DIR: {
-                cursor = db.query("weather_info", null, null, null, null, null, null);
+                cursor = db.query("weather_info", projection, selection, selectionArgs, null, null, sortOrder);
                 break;
             }
             case WEATHER_ITEM: {
                 //取得传入的uri中最后的id信息decoded path segments, each without a leading or trailing '/'
                 String id = uri.getPathSegments().get(1);
-                cursor = db.query("weather_info", null, "_id = ?", new String[]{id}, null, null, null);
+                cursor = db.query("weather_info", projection, "_id = ?", new String[]{id}, null, null, sortOrder);
 
                 break;
             }
@@ -68,16 +68,56 @@ public class WeatherProvider extends ContentProvider {
 
     @Override
     public Uri insert(Uri uri, ContentValues values) {
-        return null;
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        Uri uriReturn = null;
+        switch (uriMatcher.match(uri)) {
+            case WEATHER_ITEM:
+            case WEATHER_DIR:
+                    long newId = db.insert("weather_info", null, values);
+                    //这个uri信息包含刚刚插入的id信息，返回可以使得其他程序拿到id，再进行另外操作
+                    uriReturn = Uri.parse("content://" + AUTHORITY + "/weather_info" + newId);
+                break;
+            default:
+                break;
+        }
+        return uriReturn;
     }
 
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
-        return 0;
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        int deleteRows = 0;
+        switch (uriMatcher.match(uri)) {
+            case WEATHER_DIR: {
+                deleteRows = db.delete("weather_info", selection, selectionArgs);
+                break;
+            }
+            case WEATHER_ITEM: {
+                String id = uri.getPathSegments().get(1);
+                deleteRows = db.delete("weather_info", "_id = ?", new String[]{id});
+                break;
+            }
+        }
+        return deleteRows;
     }
 
     @Override
     public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
-        return 0;
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        int updateRows = 0;
+        switch (uriMatcher.match(uri)) {
+            case WEATHER_DIR: {
+                updateRows = db.update("weather_info", values, null, null);
+                break;
+            }
+            case WEATHER_ITEM: {
+                String id = uri.getPathSegments().get(1);
+                updateRows = db.update("weather_info", values, "_id = ?", new String[]{id});
+                break;
+            }
+            default:
+                break;
+        }
+        return updateRows;
     }
 }
