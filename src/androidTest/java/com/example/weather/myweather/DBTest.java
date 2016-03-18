@@ -17,7 +17,7 @@ public class DBTest extends AndroidTestCase {
 
     public void testAddCity() {
         City city = new City("福州");
-        WeatherDB weatherDB = WeatherDB.getInstance(getContext());
+        WeatherDB weatherDB = WeatherDB.getInstance(getContext(),1);
         weatherDB.saveCity(city);
 
         assertEquals(2, weatherDB.loadCities().size());
@@ -25,14 +25,14 @@ public class DBTest extends AndroidTestCase {
 
     public void testRemoveCity() {
         City city = new City("福州");
-        WeatherDB weatherDB = WeatherDB.getInstance(getContext());
+        WeatherDB weatherDB = WeatherDB.getInstance(getContext(),1);
         weatherDB.removeCity(city);
         assertEquals(1, weatherDB.loadCities().size());
     }
 
     public void testParseJson() {
         String cityName = "福州";
-        String address = Utility.URLPREFIX + cityName + Utility.URLEND;
+        String address = HttpUtil.URLPREFIX + cityName + HttpUtil.URLEND;
         HttpUtil.sendHttpRequest(address, new HttpCallBackListener() {
             @Override
             public void onFinish(String response) {
