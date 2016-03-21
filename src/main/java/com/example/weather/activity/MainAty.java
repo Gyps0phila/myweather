@@ -49,6 +49,10 @@ public class MainAty extends FragmentActivity {
             WeatherInfoFragment fragment = new WeatherInfoFragment();
 //            fragment.setData(weatherDB.loadWeatherInfos().get(i));
             WeatherInfo weatherInfo = weatherInfos.get(i);
+
+            Log.i("weatherInfo", "db:weather=" + weatherInfo.getWeather());
+            Log.i("weatherInfo", "db:weather=" + weatherInfo.toString());
+
             Bundle bundle = new Bundle();
             bundle.putString("city_name", weatherInfo.getCityName());
             bundle.putString("minTemp", weatherInfo.getMinTemp());
@@ -58,8 +62,6 @@ public class MainAty extends FragmentActivity {
             bundle.putString("weather", weatherInfo.getWeather());
             bundle.putString("loc", weatherInfo.getLoc());
             fragment.setArguments(bundle);
-
-            Log.i("city_name", weatherInfo.getCityName());
 
 
             fragList.add(fragment);

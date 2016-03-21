@@ -24,8 +24,7 @@ public class WeatherDB {
     private SQLiteDatabase db;
 
     private WeatherDB(Context context) {
-        WeatherOpenHelper dbHelper = new WeatherOpenHelper(context, DB_NAME, null, VERSION);
-        db = dbHelper.getWritableDatabase();
+        this(context, VERSION);
     }
 
     private WeatherDB(Context context, int version) {
@@ -113,10 +112,24 @@ public class WeatherDB {
                 weatherInfo.setMaxTemp(cs.getString(cs.getColumnIndex("max_temp")));
                 weatherInfo.setLoc(cs.getString(cs.getColumnIndex("loc")));
                 weatherInfo.setDate(cs.getString(cs.getColumnIndex("date")));
+                weatherInfo.setWeather(cs.getString(cs.getColumnIndex("weather")));
                 weatherInfos.add(weatherInfo);
             } while (cs.moveToNext());
         }
         return weatherInfos;
+    }
+
+    public int updateWeatherInfo(WeatherInfo weatherInfo) {
+
+        ContentValues values = new ContentValues();
+        values.put("min_temp", weatherInfo.getMinTemp());
+        values.put("max_temp", weatherInfo.getMaxTemp());
+        values.put("current_temp", weatherInfo.getCurrentTemp());
+        values.put("weather", weatherInfo.getWeather());
+        values.put("loc", weatherInfo.getLoc());
+        values.put("date", weatherInfo.getDate());
+        int updateRow = db.update("weather_info", values, "city_name= ?", new String[]{weatherInfo.getCityName()});
+        return updateRow;
     }
 
 

@@ -41,7 +41,6 @@ public class HttpUtil {
                         sb.append(str);
                     }
                     br.close();
-                    Log.i("sb", sb.toString());
                     if (listener != null) {
                         listener.onFinish(sb.toString());
                     }

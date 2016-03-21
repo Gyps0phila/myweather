@@ -47,7 +47,7 @@ public class BootAty extends Activity {
         weatherDB = WeatherDB.getInstance(BootAty.this,1);
 
         List<City> cities = weatherDB.loadCities();
-        Log.i("cities", "" + cities.size());
+
         if (cities.size() != 0 && flag == true) {
 
             //跳转到主页面
@@ -111,12 +111,10 @@ public class BootAty extends Activity {
                     //请求返回时候的回调处理
                     //将刚刚添加的城市相关的天气数据保存在数据库
                     WeatherInfo weatherInfo = Utility.parseWeatherJson(response);
-                    Log.i("weatherInfo", weatherInfo.toString());
                     weatherDB.addWeatherInfo(weatherInfo, cityId);
 
 //                    Bundle bundle = new Bundle();
 
-                    Log.i("weatherInfo", weatherInfo.toString());
                 }
 
                 @Override

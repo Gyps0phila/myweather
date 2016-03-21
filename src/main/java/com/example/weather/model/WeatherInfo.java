@@ -20,7 +20,6 @@ public class WeatherInfo {
     private String date;
 
 
-
     public String getCityName() {
         return cityName;
     }
@@ -76,6 +75,7 @@ public class WeatherInfo {
     public void setDate(String date) {
         this.date = date;
     }
+
 
     @Override
     public String toString() {
