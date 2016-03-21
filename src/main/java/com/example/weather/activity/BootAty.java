@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -46,7 +47,7 @@ public class BootAty extends Activity {
         flag = getIntent().getBooleanExtra("flag", true);
         weatherDB = WeatherDB.getInstance(BootAty.this,1);
 
-        List<City> cities = weatherDB.loadCities();
+        final List<City> cities = weatherDB.loadCities();
 
         if (cities.size() != 0 && flag == true) {
 
@@ -64,8 +65,55 @@ public class BootAty extends Activity {
         searchCity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!"".equals(cityName.getText().toString())) {
-                    addCityName(cityName.getText().toString());
+                if (!TextUtils.isEmpty(cityName.getText().toString())) {
+
+                    //进行网络请求，并存入数据库
+                    //无法判断输入的城市是否合法，根据解析返回数据进行判断
+                    String name = cityName.getText().toString();
+                    HttpUtil.sendHttpRequest(name, new HttpCallBackListener() {
+                        @Override
+                        public void onFinish(String response) {
+                            WeatherInfo info = Utility.parseWeatherJson(response);
+                            if (info != null) {
+                                //不为空，存在该城市，还要判断是否已添加过了
+                                if (weatherDB.contains(info.getCityName()) != null) {
+                                    //存在该城市，就要更新数据
+                                    weatherDB.updateWeatherInfo(info);
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Toast.makeText(BootAty.this, "已更新该城市", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+
+                                } else {
+                                    long id = weatherDB.saveCity(new City(info.getCityName()));
+                                    weatherDB.addWeatherInfo(info, id);
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Toast.makeText(BootAty.this, "已添加该城市", Toast.LENGTH_SHORT).show();
+
+                                        }
+                                    });
+                                }
+                            } else {
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(BootAty.this, "无法查询到该城市", Toast.LENGTH_SHORT).show();
+
+                                    }
+                                });
+                            }
+
+                        }
+
+                        @Override
+                        public void onError(Exception e) {
+
+                        }
+                    });
 
                 }
             }

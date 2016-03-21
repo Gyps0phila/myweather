@@ -102,7 +102,7 @@ public class WeatherDB {
 
     public List<WeatherInfo> loadWeatherInfos() {
         List<WeatherInfo> weatherInfos = new ArrayList<WeatherInfo>();
-        Cursor cs = db.query("weather_info", null, null, null, null, null, null);
+        Cursor cs = db.query("weather_info", null, null, null, null, null, "_id desc");
         if (cs.moveToFirst()) {
             do {
                 WeatherInfo weatherInfo = new WeatherInfo();
