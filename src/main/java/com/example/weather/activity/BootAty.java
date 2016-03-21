@@ -15,6 +15,7 @@ import com.example.weather.db.WeatherDB;
 import com.example.weather.model.City;
 import com.example.weather.model.WeatherInfo;
 import com.example.weather.myweather.R;
+import com.example.weather.service.AutoUpdateService;
 import com.example.weather.util.HttpCallBackListener;
 import com.example.weather.util.HttpUtil;
 import com.example.weather.util.Utility;
@@ -48,6 +49,9 @@ public class BootAty extends Activity {
         weatherDB = WeatherDB.getInstance(BootAty.this,1);
 
         final List<City> cities = weatherDB.loadCities();
+
+        Intent intent = new Intent(this, AutoUpdateService.class);
+        startService(intent);
 
         if (cities.size() != 0 && flag == true) {
 
@@ -167,7 +171,7 @@ public class BootAty extends Activity {
 
                 @Override
                 public void onError(Exception e) {
-
+                    e.printStackTrace();
                 }
             });
         }

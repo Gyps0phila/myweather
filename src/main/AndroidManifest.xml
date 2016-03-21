@@ -26,6 +26,10 @@
         <provider
             android:authorities="com.example.weather.myweather.provider"
             android:name="com.example.weather.provider.WeatherProvider" android:exported="true"/>
+
+        <service android:name="com.example.weather.service.AutoUpdateService" />
+        <receiver android:name="com.example.weather.receiver.AutoUpdateReceiver" />
     </application>
+
 
 </manifest>
